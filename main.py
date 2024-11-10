@@ -43,13 +43,14 @@ def predict():
 
 @app.route('/batch_predict', methods=['POST'])
 def batch_predict():
-    # Get the text from the incoming JSON request
+    # Get the text array from the incoming JSON request
     data = request.get_json()
     text_arr = data.get('text_arr', '')
 
-    # Transform the text using the loaded vectorizer
+    # Transform the text array using the loaded vectorizer
     transformed_text = count_vectorizer.transform(text_arr)
 
+    # perform predictions
     predictions = nb_model.predict(transformed_text)
     return jsonify({
         'predictions': list(predictions)
